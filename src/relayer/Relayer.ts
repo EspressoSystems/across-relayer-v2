@@ -84,9 +84,9 @@ export class Relayer {
       }
 
       // Skip deposits with quoteTimestamp in the future (impossible to know HubPool utilization => LP fee cannot be computed).
-      if (quoteTimestamp > hubPoolClient.currentTime) {
-        return false;
-      }
+      // if (quoteTimestamp > hubPoolClient.currentTime) {
+      //   return false;
+      // }
 
       if (ignoredAddresses?.includes(getAddress(depositor)) || ignoredAddresses?.includes(getAddress(recipient))) {
         this.logger.debug({
@@ -268,10 +268,11 @@ export class Relayer {
     });
 
     // Filter out deposits whose block time does not meet the minimum number of confirmations for the origin chain.
-    const confirmedUnfilledDeposits = unfilledDeposits.filter(
-      ({ deposit: { originChainId, blockNumber } }) =>
-        blockNumber <= spokePoolClients[originChainId].latestBlockSearched - mdcPerChain[originChainId]
-    );
+    // const confirmedUnfilledDeposits = unfilledDeposits.filter(
+    //   ({ deposit: { originChainId, blockNumber } }) =>
+    //     blockNumber <= spokePoolClients[originChainId].latestBlockSearched - mdcPerChain[originChainId]
+    // );
+    const confirmedUnfilledDeposits = unfilledDeposits;
     this.logger.debug({
       at: "Relayer::checkForUnfilledDepositsAndFill",
       message: `${confirmedUnfilledDeposits.length} unfilled deposits found`,

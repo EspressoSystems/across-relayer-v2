@@ -590,6 +590,7 @@ export async function getProvider(chainId: number, logger?: winston.Logger, useC
     providerCacheNamespace,
     disableProviderCache ? undefined : redisClient
   );
+  provider.pollingInterval = 500;
 
   if (useCache) {
     providerCache[getProviderCacheKey(chainId, redisClient !== undefined)] = provider;

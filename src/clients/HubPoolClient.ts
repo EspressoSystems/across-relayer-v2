@@ -35,9 +35,10 @@ export class HubPoolClient extends clients.HubPoolClient {
 
   async computeRealizedLpFeePct(deposit: LpFeeRequest): Promise<interfaces.RealizedLpFee> {
     if (deposit.quoteTimestamp > this.currentTime) {
-      throw new Error(
-        `Cannot compute lp fee percent for quote timestamp ${deposit.quoteTimestamp} in the future. Current time: ${this.currentTime}.`
-      );
+      deposit.quoteTimestamp = this.currentTime;
+      // throw new Error(
+      //   `Cannot compute lp fee percent for quote timestamp ${deposit.quoteTimestamp} in the future. Current time: ${this.currentTime}.`
+      // );
     }
 
     return await super.computeRealizedLpFeePct(deposit);
